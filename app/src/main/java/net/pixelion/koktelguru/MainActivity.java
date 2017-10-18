@@ -3,6 +3,7 @@ package net.pixelion.koktelguru;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -16,12 +17,21 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    public Toolbar toolbar;
+    public Kokteli kokteli;
+    public Bar bar;
+    public FragmentManager fragmentManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        kokteli = new Kokteli();
+        bar = new Bar();
+        fragmentManager = getSupportFragmentManager();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +50,10 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        navigationView.setCheckedItem(R.id.nav_kokteli);
+        fragmentManager.beginTransaction().replace(R.id.fragment, kokteli).commit();
+
+
     }
 
     @Override
@@ -78,12 +92,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
+        if (id == R.id.nav_kokteli) {
+            toolbar.setTitle(R.string.nav_kokteli);
+            fragmentManager.beginTransaction().replace(R.id.fragment, kokteli).commit();
+        } else if (id == R.id.nav_bar) {
+            toolbar.setTitle(R.string.nav_bar);
+            fragmentManager.beginTransaction().replace(R.id.fragment, bar).commit();
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {
