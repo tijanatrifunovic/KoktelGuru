@@ -2,10 +2,17 @@ package net.pixelion.koktelguru;
 
 import android.app.ActionBar;
 import android.app.SearchManager;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.view.View;
@@ -26,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     public Kokteli kokteli;
     public Bar bar;
     public FragmentManager fragmentManager;
+    public BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +57,36 @@ public class MainActivity extends AppCompatActivity
 //            }
 //        });
 
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.navigation);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener
+                (new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        Fragment selectedFragment = null;
+                        switch (item.getItemId()) {
+                            case R.id.action_item1:
+                                selectedFragment = SviKokteli.newInstance();
+                                break;
+                            case R.id.action_item2:
+                                selectedFragment = Omiljeni.newInstance();
+                                break;
+                            case R.id.action_item3:
+                                selectedFragment = Top20.newInstance();
+                                break;
+                        }
+                        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.fragment, selectedFragment);
+                        transaction.commit();
+                        return true;
+                    }
+                });
+
+        //Manually displaying the first fragment - one time only
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment, SviKokteli.newInstance());
+        transaction.commit();
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -58,7 +96,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_kokteli);
-        fragmentManager.beginTransaction().replace(R.id.fragment, kokteli).commit();
+        fragmentManager.beginTransaction().replace(R.id.fragment, SviKokteli.newInstance()).commit();
 
 
     }
@@ -86,8 +124,11 @@ public class MainActivity extends AppCompatActivity
         filterView.setBackgroundColor(View.INVISIBLE);
         filterView.setPadding(0, 0, 40, 0);
         filterView.setImageResource(R.drawable.ic_action_filter);
+
         return true;
     }
+
+
 
 //    @Override
 //    public boolean onOptionsItemSelected(MenuItem item) {
@@ -113,9 +154,11 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_kokteli) {
             toolbar.setTitle(R.string.nav_kokteli);
-            fragmentManager.beginTransaction().replace(R.id.fragment, kokteli).commit();
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            fragmentManager.beginTransaction().replace(R.id.fragment, SviKokteli.newInstance()).commit();
         } else if (id == R.id.nav_bar) {
             toolbar.setTitle(R.string.nav_bar);
+            bottomNavigationView.setVisibility(View.INVISIBLE);
             fragmentManager.beginTransaction().replace(R.id.fragment, bar).commit();
         } else if (id == R.id.nav_slideshow) {
 

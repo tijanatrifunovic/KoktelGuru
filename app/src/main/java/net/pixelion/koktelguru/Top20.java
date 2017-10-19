@@ -11,9 +11,10 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SviKokteli extends Fragment {
-    public static SviKokteli newInstance() {
-        SviKokteli fragment = new SviKokteli();
+public class Top20 extends Fragment {
+
+    public static Top20 newInstance() {
+        Top20 fragment = new Top20();
         return fragment;
     }
 
@@ -25,7 +26,6 @@ public class SviKokteli extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_svi_kokteli, container, false);
+        return inflater.inflate(R.layout.fragment_top20, container, false);
     }
-
 }

@@ -10,4 +10,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="bottom_nav_kokteli_all">svi kokteli</string>
+    <string name="bottom_nav_kokteli_favorites">omiljeni</string>
+    <string name="bottom_nav_kokteli_top_20">top 20</string>
 </resources>

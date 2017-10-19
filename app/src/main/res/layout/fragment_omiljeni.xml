@@ -1,16 +1,17 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context="net.pixelion.koktelguru.SviKokteli">
+    tools:context="net.pixelion.koktelguru.Omiljeni">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:textColor="#FFFFFF"
-        android:text="@string/bottom_nav_kokteli_all"
+        android:text="@string/bottom_nav_kokteli_favorites"
         android:textSize="30sp" />
 
-</RelativeLayout>
+
+</FrameLayout>
